@@ -1,13 +1,23 @@
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as bs
 
-r =requests.get('https://id.77577.live/id/post/index')
+from app import URL
+
+URL = "https://id.77577.live/id/post/index"
+
+req = requests.get(URL)
+
+soup = bs(req.text, 'html.parser')
+
+titles = soup.find_all('div', attrs= {'class', 'row p-0 m-0'})
+print(titles[1].text)
+# r =requests.get('https://id.77577.live/id/post/index')
 
 
-soup = BeautifulSoup(r.content, 'html.parser')
+# soup = BeautifulSoup(r.content, 'html.parser')
 
-for link in soup.find_all('a'):
-    print(link.get('href'))
+# for link in soup.find_all('a'):
+#     print(link.get('href'))
 
 # s = soup.find("div", class_="row p-0 m-0 mb-3")
 

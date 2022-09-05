@@ -1,13 +1,15 @@
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as bs
  
- 
-# Making a GET request
-r = requests.get('https://www.geeksforgeeks.org/python-programming-language/')
- 
-# Parsing the HTML
-soup = BeautifulSoup(r.content, 'html.parser')
+URL = 'https://www.geeksforgeeks.org/page/'
 
+for page in range(1,10):
+    req = requests.get(URL + str(page) + '/')
+    soup = bs(req.text, 'html.parser')
+    titles = soup.find_all('div',attrs = {'class','head'})
 
-for link in soup.find_all('a'):
-    print(link.get('href'))
+    for i in range(4, 19):
+        if page > 1: 
+            print(f"{(i-3)+page*15}" + titles[i].text)
+        else: 
+            print(f"{i-3}" + titles[i].text)
