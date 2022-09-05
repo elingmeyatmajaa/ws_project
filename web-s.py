@@ -7,9 +7,17 @@ r =requests.get('https://www.geeksforgeeks.org/python-programming-language/')
 
 soup = BeautifulSoup(r.content, 'html.parser')
 
-s = soup.find("div", class_='entry-content')
-content = s.find_all('p')
-print(content)
+s = soup.find("div", id="main")
+
+leftbar = s.find('ul', class_="leftBarList")
+
+
+
+lines = leftbar.find_all('li')
+print(lines)
+
+# for line in lines: 
+    # print(line.text)
 # print(soup.title)
 
 # print(soup.title.name)
