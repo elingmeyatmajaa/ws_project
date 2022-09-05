@@ -1,19 +1,24 @@
-from ast import If
 import requests
 from bs4 import BeautifulSoup as bs
 
-from app import URL
 
-URL = "https://id.77577.live/id/post/index"
+URL = ["https://id.77577.live/id/post/index", "https://id.77577.live/id/post/index?page=10"]
 
 
-for page in range(1,10):
-    req = requests.get(URL)
+for url in range(0, 2):
+    # print(url)
+    req = requests.get(URL[url])
+    # print(req)
     soup = bs(req.text, 'html.parser')
-    titles = soup.find_all('div', attrs = {'class', 'row p-0 m-0'})
+    # print(soup)
 
-    for i in range(4, 19):
-        if page > 1:
-            print(f"{(i-3)+page*15}" + titles[i].text)
-        else:
-            print(f"{i-3}" + titles[i].text)
+    titles = soup.find_all('div', attrs = {'class', 'row p-0 m-0 mb-3'})
+    # print(titles)
+
+    for i in range(4,19):
+        print(i)
+        # if url+1 > 1:
+        #     print(i)
+
+    # for i in range(4):
+    #   print(i)
