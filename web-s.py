@@ -1,27 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
-
-r =requests.get('https://www.geeksforgeeks.org/python-programming-language/')
-
-# print(r)
-
+ 
+ 
+# Making a GET request
+r = requests.get('https://www.geeksforgeeks.org/python-programming-language/')
+ 
+# Parsing the HTML
 soup = BeautifulSoup(r.content, 'html.parser')
 
-s = soup.find("div", id="main")
 
-leftbar = s.find('ul', class_="leftBarList")
-
-
-
-lines = leftbar.find_all('li')
-print(lines)
-
-# for line in lines: 
-    # print(line.text)
-# print(soup.title)
-
-# print(soup.title.name)
-
-# print(soup.title.parent.name)
-
-
+for link in soup.find_all('a'):
+    print(link.get('href'))

@@ -6,11 +6,13 @@ r =requests.get('https://id.77577.live/id/post/index')
 
 soup = BeautifulSoup(r.content, 'html.parser')
 
-s = soup.find("div", class_="row m-0 p-0 mt-2")
+s = soup.find("div", class_="row p-0 m-0 mb-3")
 
 
-content = s.find_all( 'p')
-print(content)
+contents = s.find_all( 'p')
+
+for content in contents:
+    print(content.text)
 
 # print(soup.title)
 
