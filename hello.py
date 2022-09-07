@@ -1,26 +1,29 @@
-import requests
-from bs4 import BeautifulSoup as bs
-import csv
+from urllib import urlopen
+from bs4 import BeautifulSoup
+import pymysql.cursors
 
-URL = 'https://www.geeksforgeeks.org/page/'
+#Webpage conncection
+html = urlopen("http://www.officialcharts.com/charts/singles-chart/19800203/7501/")
 
-req = requests.get(URL)
-soup = bs(req.text, 'html.parser')
 
-titles = soup.find_all('div', attrs={'class', 'head'})
-titles_list = []
+#Grab title-artis classes
+bsObj = BeautifulSoup(html)
+recordList = bsObj.find_all("div", {'class': 'title-artist',})
 
-count = 1
-for title in titles:
-	d = {}
-	d['Title Number'] = f'Title {count}'
-	d['Title Name'] = title.text
-	count += 1
-	titles_list.append(d)
+connection = pymysql.connect(host="localhost",
+                             user='root',
+                             password="strong_password1234",
+                             db = "webscrapping", 
+                             charset = 'utf8mb4',
+                             cursorclas = pymysql.cursors.DictCursor)
 
-filename = 'titles.csv'
-with open(filename, 'w', newline='') as f:
-	w = csv.DictWriter(f,['Title Number','Title Name'])
-	w.writeheader()
-	
-	w.writerows(titles_list)
+try:
+    with connection.cursor() as cursor:
+        for record in recordList:
+            title = record.find("div", {"class": "title",}).get_text().strip()
+            artist = record.find("div", {"class": "artist"}).get_text().strip()
+            sql = "INSERT INTO `artist_song` (`artist`, `song`) VALUES (%s, %s)"
+            cursor.execute(sql, (artist, title))
+    connection.commit()
+finally:
+    connection.close()

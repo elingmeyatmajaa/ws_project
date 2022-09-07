@@ -16,9 +16,9 @@ for url in range(0,2):
 
 
     for i in range(4, 19):
-        print(i)
-        # if url+1 > 1:
-        #     print(i)
-        #     print(f"{(i - 3) + url * 15}" + titles[i].text)
-        # else:
-        #     print(f"{i - 3}" + titles[i].text)
+        # print(i)
+        if url+1 > 1:
+            # print(i)
+            print(f"{(i - 3) + url * 15}" + titles[i].text)
+        else:
+            print(f"{i - 3}" + titles[i].text)

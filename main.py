@@ -13,10 +13,10 @@ for url in range(0, 2):
     # print(soup)
 
     titles = soup.find_all('div', attrs = {'class', 'row p-0 m-0 mb-3'})
-    # print(titles)
+    print(titles)
 
-    for i in range(4,19):
-        print(i)
+    # for i in range(4,19):
+    #     print(i)
         # if url+1 > 1:
         #     print(i)
 
