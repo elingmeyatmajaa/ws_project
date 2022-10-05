@@ -24,24 +24,25 @@ table = soup.find('div', attrs={'class':'conten_kanal'})
 # for row in table.findAll('a', href=True):
 #     print(row['href'])
 
-for row in table.findAll('div', attrs={'class':'conten1'}):
+for row in table.findAll('div', attrs={'class':'teaser_conten1_center'}):
     # print(row)
     article = {}
-    article['category'] = row.h1.text
+    article['category'] = row.p.text
     article['title'] = row.h2.text
+    article['content'] = row.p.text
   
-    article['href'] = row.a['href']
-    article['img'] = row.img['data-original']
-#     article['date'] = row.small.text
+    # article['href'] = row.a['href']
+    # article['img'] = row.img['data-original']
+    # article['date'] = row.p.text
    
     articles.append(article)
     pprint(article)
 
-filename = 'article.csv'
-with open(filename, 'w', newline='') as f:
-    w = csv.DictWriter(f, ['category', 'title','href', 'img'])
-    w.writeheader()
-    for article in articles:
-        w.writerow(article)
-print('success webscrepping. file in \WEBSCRAPPING')
+# filename = 'article.csv'
+# with open(filename, 'w', newline='') as f:
+#     w = csv.DictWriter(f, ['category', 'title','href', 'img'])
+#     w.writeheader()
+#     for article in articles:
+#         w.writerow(article)
+# print('success webscrepping. file in \WEBSCRAPPING')
 
