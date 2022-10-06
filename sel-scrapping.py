@@ -31,7 +31,7 @@ for link in links:
     link_url = link['href']
 
     title = link.find_next('a').text
-    print(title + '\n' + link_url + '\n')
+    # print(title + '\n' + link_url + '\n')
 
     response = requests.get(base + link_url)
 
@@ -43,8 +43,11 @@ for link in links:
     article ={}
 
     article['title'] = table.h1.text
-    article['img'] = table.img['src']
+    article['img'] = table.source['srcset']
     article['content'] = table.find_all('p')
+
+   
+
     articles.append(article)
     pprint(article)
     # print(soup_link)
