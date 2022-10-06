@@ -31,7 +31,6 @@ for link in links:
     link_url = link['href']
 
     title = link.find_next('a').text
-    # print(title + '\n' + link_url + '\n')
 
     response = requests.get(base + link_url)
 
@@ -44,37 +43,11 @@ for link in links:
 
     article['title'] = table.h1.text
     article['img'] = table.source['srcset']
-    article['content'] = table.find_all('p')
-
-   
+    a = table.find_all('p')
+    article['content'] = str(a).replace('[','').replace(']','')
 
     articles.append(article)
     pprint(article)
-    # print(soup_link)
-
-    # scripts = soup_link.find_all('script')
-    # for script in scripts:
-    #     if 'window.__preloadedData = ' in script.text:
-    #         jsonStr = script.text
-    #         jsonStr = jsonStr.split('window.__preloadedData = ')[-1]
-    #         jsonStr = jsonStr.rsplit(';',1)[0]
-
-    #         jsonData = json.loads(jsonStr)
-    #         print(jsonData)
-
-    #         article = []
-    #         for k, v in jsonData['initialState'].items():
-    #             w=1
-    #             try:
-    #                 if v['__typename'] == 'TextInline':
-    #                     article.append(v['text'])
-
-    #             except:
-    #                 continue
-    #         article = [ each.strip() for each in article ]
-    #         article = ''.join([('' if c in string.punctuation else ' ')+c for c in article]).strip()
-    # print (article + '\n')
-
 print("Complete")
 
 browser.quit()
