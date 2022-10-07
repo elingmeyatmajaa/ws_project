@@ -80,18 +80,13 @@ for link in links:
     a = table.h1.text
     b = table.source['srcset']
     c = ''
-# #     print(a)
 
     mycursor = mydb.cursor()
 
-# #     ## defining the Query
     query = "INSERT INTO article (title,img, content) VALUES (%s, %s, %s)"
-# #     ## storing values in a variable
-    # values = ('halo', 'halo1','p')
 
     values = (a,b,c)
 
-# #     ## executing the query with values
     mycursor.execute(query, values)
 
 # # ## to make final output we have to run the 'commit()' method of the database object
