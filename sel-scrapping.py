@@ -32,7 +32,9 @@ while True:
             break    
 
 soup = BeautifulSoup(browser.page_source,'lxml')
+# print(soup.prettify())
 search_results = soup.find('div', {'class':'trending-news__list'})
+# print(search_results)
 
 article ={}
 mydb = mysql.connect(
@@ -42,41 +44,57 @@ mydb = mysql.connect(
         database="webscrapping"
 )
 
-links = search_results.find_all('a')
+links = search_results.find_all('div',attrs={'role':'article'} )
 # print(links)
 
-# link_url = links['href']
+# link_url = links.attrs['href']
 # print(link_url)
 for link in links:
-    link_url = link['href']
+    # print(link)
+    
+    link_url = link['about']
     # print(link_url)
 
-    title = link.find_next('a').text
+    # print ("The list is: " + str(link_url)) 
+
+    # remove duplicated from list 
+    # result = [] 
+    # for i in link_url: 
+    #     if i not in result: 
+    #         result.append(i) 
+    # print ("The list after removing duplicates : " + str(result)) 
+
+    # # a = list(set(link_url))
+    # a = list(dict.fromkeys(link_url))
+    # print(a)
+
+# title = links.find_nevasdaxt('a').text
+# print(title)
 
     response = requests.get(base + link_url)
 
     soup_link = BeautifulSoup(response.text, 'html5lib')
-#     articles=[]
+    articles=[]
 
     table = soup_link.find('div', attrs={'role':'article'})
     a = table.h1.text
     b = table.source['srcset']
     c = ''
-#     print(a)
+# #     print(a)
 
     mycursor = mydb.cursor()
 
-#     ## defining the Query
+# #     ## defining the Query
     query = "INSERT INTO article (title,img, content) VALUES (%s, %s, %s)"
-#     ## storing values in a variable
+# #     ## storing values in a variable
     # values = ('halo', 'halo1','p')
 
-    values = (a, b,c)
+    values = (a,b,c)
 
-#     ## executing the query with values
+# #     ## executing the query with values
     mycursor.execute(query, values)
 
-# ## to make final output we have to run the 'commit()' method of the database object
+# # ## to make final output we have to run the 'commit()' method of the database object
 mydb.commit()
 print(mycursor.rowcount, "was inserted.")
 
