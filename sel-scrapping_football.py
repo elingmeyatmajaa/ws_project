@@ -28,7 +28,7 @@ import html
 # driver = webdriver.Chrome('./chromedriver', options = options)
 
 base = "https://www.sportingnews.com"
-browser = webdriver.Chrome('D:/REPOSITORY/python_project/chromedriver.exe', options = options)
+browser = webdriver.Chrome('/home/eling ./chromedriver', options = options)
 wait = WebDriverWait(browser, 10)
 browser.get('https://www.sportingnews.com/us/soccer/news')
 while True:
