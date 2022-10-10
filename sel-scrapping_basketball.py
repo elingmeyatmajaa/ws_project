@@ -11,6 +11,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from pprint import pprint
 import csv
 
+from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
+
+options = Options()
+options.add_argument('--no-sandbox')
+options.add_argument("--headless")
+options.add_argument('--disable-dev-shm-usage')
+
 # import mysql.connector
 import mysql.connector as mysql
 
@@ -19,7 +27,7 @@ import html
 
 
 base = "https://www.sportingnews.com"
-browser = webdriver.Chrome('D:/REPOSITORY/python_project/chromedriver.exe')
+browser = webdriver.Chrome('/home/eling/chromedriver', options = options)
 wait = WebDriverWait(browser, 10)
 browser.get('https://www.sportingnews.com/us/nba/news')
 while True:
@@ -40,8 +48,8 @@ article ={}
 mydb = mysql.connect(
         host="localhost",
         user="root",
-        password="strong_password1234",
-        database="db_starting_sport_dev"
+        password="3c065435b63a57e6",
+        database="starting_sport_dev"
 )
 
 links = search_results.find_all('div',attrs={'role':'article'} )
