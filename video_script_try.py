@@ -34,8 +34,8 @@ mydb = mysql.connect(
 # driver = webdriver.Chrome('./chromedriver', options = options)
 
 base = "https://www.bola.com/"
-# browser = webdriver.Chrome('/home/eling ./chromedriver', options = options)
-browser = webdriver.Chrome('D:/REPOSITORY/python_project/chromedriver.exe')
+browser = webdriver.Chrome('/home/eling/chromedriver', options = options)
+# browser = webdriver.Chrome('D:/REPOSITORY/python_project/chromedriver.exe')
 wait = WebDriverWait(browser, 10)
 browser.get('https://www.bola.com/video')
 # while True:
