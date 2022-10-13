@@ -10,6 +10,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pprint import pprint
 import csv
+from datetime import datetime
+
 
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
@@ -27,7 +29,9 @@ import html
 
 
 base = "https://www.sportingnews.com"
+# browser = webdriver.Chrome('D:/REPOSITORY/python_project/chromedriver.exe')
 browser = webdriver.Chrome('/home/eling/chromedriver', options = options)
+
 wait = WebDriverWait(browser, 10)
 browser.get('https://www.sportingnews.com/us/nba/news')
 while True:
@@ -48,8 +52,8 @@ article ={}
 mydb = mysql.connect(
         host="localhost",
         user="root",
-        password="3c065435b63a57e6",
-        database="starting_sport_dev"
+        password="xxx",
+        database="xxx"
 )
 
 links = search_results.find_all('div',attrs={'role':'article'} )
@@ -94,20 +98,21 @@ for link in links:
     f = ' '
     g = ' '
     aa = table.find_all('p')
-    h = str(aa).replace('[','').replace('<p>','').replace('</p>','').replace('<a>','').replace('</a>','').replace('<strong>','').replace('</strong>','').replace(']','')
+    h = str(aa).replace('[','').replace('<p>','').replace('</p>','').replace('<p','').replace('>','').replace('<a>','').replace('</a>','').replace('<strong>','').replace('</strong>','').replace(']','')
     i = ' '
     j = ' '
     k = ' '
     l = ' '
     m = '1'
+    n = datetime.now()
 
-    # print(a,b,c)
+    # print(c, d, h)
 
     mycursor = mydb.cursor()
 
-    query = "INSERT INTO artikel_posts(id_main_kategori,id_kategori,sampul, judul,judulVi, judulCn, judulId, konten,kontenVi,kontenCn,kontenId,slug, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    query = "INSERT INTO artikel_posts(id_main_kategori,id_kategori,sampul, judul,judulVi, judulCn, judulId, konten,kontenVi,kontenCn,kontenId,slug, user_id, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
-    values = (a,b,c,d,e,f,g,h,i,j,k,l,m)
+    values = (a,b,c,d,e,f,g,h,i,j,k,l,m, n)
 
     mycursor.execute(query, values)
 

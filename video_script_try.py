@@ -32,8 +32,8 @@ import html
 mydb = mysql.connect(
         host="localhost",
         user="root",
-        password="strong_password1234",
-        database="db_starting_sport_dev"
+        password="xxx",
+        database="xxx"
 )
 
 # driver = webdriver.Chrome('./chromedriver', options = options)
