@@ -25,17 +25,17 @@ options.add_argument('--no-sandbox')
 options.add_argument("--headless")
 options.add_argument('--disable-dev-shm-usage')
 
-# import mysql.connector
-# import mysql.connector as mysql
+import mysql.connector
+import mysql.connector as mysql
 
-# import html
+import html
 
-# mydb = mysql.connect(
-#         host="localhost",
-#         user="root",
-#         password="xxx",
-#         database="xxx"
-# )
+mydb = mysql.connect(
+        host="localhost",
+        user="root",
+        password="strong_password1234",
+        database="db_starting_sport_dev"
+)
 
 # driver = webdriver.Chrome('./chromedriver', options = options)
 
@@ -60,13 +60,28 @@ table = soup_link.find('article', {'class':'newdetail'})
 
 tables_1 = soup_link.find('div', {'class':'col-xs-12 col-sm-12 col-md-8 col-lg-8 col'})
 
-a = table.h1.text
-b = table.img['src']
-
+a = '1'
+b = '1'
 c = tables_1.figure.div['data-video-file']
+d = table.img['src']
+e = table.h1.text
+f = ' '
+g = ' '
+h = ' '
+i = '1'
+j = datetime.now()
 
 
-print(a,b,c)
+mycursor = mydb.cursor()
+
+query = "INSERT INTO video_posts(id_kategori_video,id_main_kategori_video, file,cover, description, descriptionId, descriptionVi, descriptionCn,user_id, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+
+values = (a,b,c,d,e,f,g,h,i,j)
+
+mycursor.execute(query, values)
+
+mydb.commit()
+print(mycursor.rowcount, "was inserted.")
 
 print("Complete")
 
