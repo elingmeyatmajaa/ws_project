@@ -11,6 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from pprint import pprint
 import csv
 from datetime import datetime
+import re
 
 
 from selenium.webdriver.chrome.options import Options
@@ -29,11 +30,11 @@ import html
 
 # driver = webdriver.Chrome('./chromedriver', options = options)
 
-base = "https://www.cbssports.com/"
+base = "https://www.sbnation.com"
 browser = webdriver.Chrome('D:/REPOSITORY/python_project/chromedriver.exe')
 # browser = webdriver.Chrome('/home/eling/chromedriver', options = options)
 wait = WebDriverWait(browser, 10)
-browser.get('https://www.cbssports.com/nba')
+browser.get('https://www.sbnation.com/nba')
 # while True:
 #     try:
 #         time.sleep(1)
@@ -45,34 +46,45 @@ browser.get('https://www.cbssports.com/nba')
 
 soup = BeautifulSoup(browser.page_source,'lxml')
 # print(soup.prettify())
-search_results = soup.find('div', {'class':'row'})
+search_results = soup.find('div', {'class':'c-six-up__main'})
 # print(search_results)
 
-# article ={}
-# mydb = mysql.connect(
-#         host="localhost",
-#         user="root",
-#         password="strong_password1234",
-#         database="db_starting_sport_dev"
-# )
+article ={}
+mydb = mysql.connect(
+        host="localhost",
+        user="root",
+        password="strong_password1234",
+        database="db_starting_sport_dev"
+)
 
-links = search_results.find_all('li',attrs={'class':'col-4 article-list-pack-item'} )
-
+links = search_results.find_all('div',attrs={'class':'c-entry-box--compact c-entry-box--compact--article c-entry-box--compact--hero'} )
+# print(links)
 for link in links:
-   
+    # print(link)
     
     link_url = link.a['href']
     # print(link_url)
     
 
-    response = requests.get(base + link_url)
-    print(response)
+    response = requests.get(link_url)
+    # print(response)
 
-    # soup_link = BeautifulSoup(response.text, 'html5lib')
+    soup_link = BeautifulSoup(response.text, 'html5lib')
 #     articles=[]
 
-    # table = soup_link.find('div', attrs={'data-testid':'article-content_wrapper'})
-    # print(table.h1.text)
+    table = soup_link.find('article', attrs={'class':'l-segment l-main-content'})
+
+    # a = table.h1.text
+    # aa = table.find_all('p')
+    # cc = str(aa).replace('[','').replace('<p>','').replace('</p>','').replace('<a>','').replace('</a>','').replace('<strong>','').replace('</strong>','').replace(']','')
+    # clean = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+    # b = re.sub(clean, '', cc)
+    # c = table.figure.span.span['data-original']
+   
+    # b = re.compile(r'<[^>]+>')
+    # def remove_html(string):
+    #     return b.sub('', string)
+    # print(c)
 
     # a = table.h1.text
     # cc = table.figure.img['src']
@@ -83,35 +95,38 @@ for link in links:
     # print(b)
 
     # print(c)
-    # a = '1'
-    # b = '1'
-    # cc = table.figure.img['src']
-    # c = cc.partition("?")[0].strip()
-    # d = table.h1.text
-    # e = ' '
-    # f = ' '
-    # g = ' '
-    # aa = table.find_all('p')
-    # h = str(aa).replace('[','').replace('<p>','').replace('</p>','').replace('<a>','').replace('</a>','').replace('<strong>','').replace('</strong>','').replace(']','')
-    # i = ' '
-    # j = ' '
-    # k = ' '
-    # l = ' '
-    # m = '1'
-    # n = datetime.now()
+    a = '1'
+    b = '1'
+    c = table.figure.span.span['data-original']
+    d = table.h1.text
+    e = ' '
+    f = ' '
+    g = ' '
+    aa = table.find_all('p')
+    cc = str(aa).replace('[','').replace('<p>','').replace('</p>','').replace('<a>','').replace('</a>','').replace('<strong>','').replace('</strong>','').replace(']','')
+    clean = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+    h = re.sub(clean, '', cc)
+    i = ' '
+    j = ' '
+    k = ' '
+    l = ' '
+    m = '1'
+    n = datetime.now()
+
+    # print(c,d,h)
 
     # print(a,b,c)
 
-#     mycursor = mydb.cursor()
+    mycursor = mydb.cursor()
 
-#     query = "INSERT INTO artikel_posts(id_main_kategori,id_kategori,sampul, judul,judulVi, judulCn, judulId, konten,kontenVi,kontenCn,kontenId,slug, user_id, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    query = "INSERT INTO artikel_posts(id_main_kategori,id_kategori,sampul, judul,judulVi, judulCn, judulId, konten,kontenVi,kontenCn,kontenId,slug, user_id, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
-#     values = (a,b,c,d,e,f,g,h,i,j,k,l,m,n)
+    values = (a,b,c,d,e,f,g,h,i,j,k,l,m,n)
 
-#     mycursor.execute(query, values)
+    mycursor.execute(query, values)
 
-# mydb.commit()
-# print(mycursor.rowcount, "was inserted.")
+mydb.commit()
+print(mycursor.rowcount, "was inserted.")
 
   
 print("Complete")
