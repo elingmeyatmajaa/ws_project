@@ -87,7 +87,6 @@ for link in links:
 	j = datetime.now()
 
 
-
 	mycursor = mydb.cursor()
 
 	query = "INSERT INTO video_posts(id_kategori_video,id_main_kategori_video, file,cover, description, descriptionId, descriptionVi, descriptionCn,user_id, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
