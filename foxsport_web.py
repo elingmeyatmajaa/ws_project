@@ -67,24 +67,26 @@ for link in links:
 	soup_link = BeautifulSoup(browser.page_source,'lxml')
 
 	search_results1 = soup_link.find('img', itemprop="thumbnailUrl")
+	search_result_title = soup_link.find('span', {'class':'styles__VideoTitle-sc-l83x2x-10 gmJKwN'})
+
 	search_results = soup_link.find('div', {'class':'styles__VideoPlayerWrapper-sc-l83x2x-3 gQuvyE'})
 	url = search_results.find("meta", itemprop="contentURL")
+	
 	# print(url["content"])
-
-
-
+	# print(cc)
 
 
 	a = '1'
 	b = '1'
 	c = url["content"]
 	d = search_results1['src']
-	e = 'Sixers cook the Kings in Sydney'
+	e = str(search_result_title).replace('<span class="styles__VideoTitle-sc-l83x2x-10 gmJKwN">','').replace('</span>','')
 	f = ' '
 	g = ' '
 	h = ' '
 	i = '1'
 	j = datetime.now()
+	
 
 
 	mycursor = mydb.cursor()
