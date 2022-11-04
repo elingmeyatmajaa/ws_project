@@ -12,6 +12,8 @@ from pprint import pprint
 import csv
 from datetime import datetime
 import re
+from slugify import slugify
+
 
 
 from selenium.webdriver.chrome.options import Options
@@ -86,7 +88,7 @@ for link in links:
     h = ' '
     i = ' '
     j = ' '
-    k = ' '
+    k = slugify(c)
     l = '7'
     m = datetime.now()
 
